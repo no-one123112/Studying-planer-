@@ -1,6 +1,7 @@
 console.log("🚀 التطبيق بدأ العمل");
 
-let conceptsData = {
+// محتوى المفاهيم لكل لغة
+const conceptsData = {
   javascript:{
     Syntax:[
       {name:"المتغيرات", desc:"var, let, const لتخزين البيانات"},
@@ -9,9 +10,6 @@ let conceptsData = {
     Loops:[
       {name:"for loop", desc:"for(let i=0;i<5;i++){}"},
       {name:"while loop", desc:"while(condition){}"}
-    ],
-    DOM:[
-      {name:"DOM", desc:"document.getElementById() للتعامل مع العناصر"}
     ]
   },
   python:{
@@ -47,20 +45,19 @@ let conceptsData = {
 };
 
 let currentLang = "javascript";
-let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
 
 // عرض المفاهيم
 function showConcepts() {
-  let list = document.getElementById("conceptList");
+  const list = document.getElementById("conceptList");
   list.innerHTML = "";
-  let sections = conceptsData[currentLang] || {};
-  for(let sec in sections){
-    let liSection = document.createElement("li");
-    liSection.innerHTML = `<strong>${sec}</strong>`;
+  const sections = conceptsData[currentLang] || {};
+  for(let section in sections){
+    const liSection = document.createElement("li");
+    liSection.innerHTML = `<strong>${section}</strong>`;
     list.appendChild(liSection);
-    sections[sec].forEach(con=>{
-      let li = document.createElement("li");
-      li.innerHTML = `💡 ${con.name}<br>📝 ${con.desc}`;
+    sections[section].forEach(concept=>{
+      const li = document.createElement("li");
+      li.innerHTML = `💡 ${concept.name}<br>📝 ${concept.desc}`;
       list.appendChild(li);
     });
   }
@@ -75,68 +72,20 @@ function changeLanguage(){
 
 // البحث الداخلي
 function searchConcepts(){
-  let term = document.getElementById("searchInput").value.toLowerCase();
-  let list = document.getElementById("conceptList");
+  const term = document.getElementById("searchInput").value.toLowerCase();
+  const list = document.getElementById("conceptList");
   list.innerHTML = "";
-  let sections = conceptsData[currentLang];
+  const sections = conceptsData[currentLang] || {};
   for(let sec in sections){
-    sections[sec].forEach(con=>{
-      if(con.name.toLowerCase().includes(term) || con.desc.toLowerCase().includes(term)){
-        let li = document.createElement("li");
-        li.innerHTML = `💡 ${con.name}<br>📝 ${con.desc}<br><em>${sec}</em>`;
+    sections[sec].forEach(concept=>{
+      if(concept.name.toLowerCase().includes(term) || concept.desc.toLowerCase().includes(term)){
+        const li = document.createElement("li");
+        li.innerHTML = `💡 ${concept.name}<br>📝 ${concept.desc}<br><em>${sec}</em>`;
         list.appendChild(li);
       }
     });
   }
 }
 
-// البريميم
-function unlockPremium(){
-  document.getElementById("premiumFeatures").style.display = "block";
-  loadNotes();
-}
-
-// زر البريميم
-document.getElementById("premiumBtn").onclick = function(){
-  document.getElementById("paymentSection").style.display="block";
-}
-
-// اختيار طريقة الدفع
-document.getElementById("paymentMethod").onchange = function(){
-  let method = this.value;
-  let number = method==="vodafone"?"0123456789":
-               method==="orange"?"0112345678":"0101234567";
-  document.getElementById("walletNumber").innerText = number;
-}
-
-// تأكيد الدفع
-function confirmPayment(){
-  let txn = document.getElementById("transactionId").value;
-  if(txn===""){ alert("اكتب رقم التحويل"); return;}
-  isPremium = true;
-  localStorage.setItem("isPremium", true);
-  alert("تم تفعيل البريميم!");
-  unlockPremium();
-  document.getElementById("paymentSection").style.display="none";
-}
-
-// النوتة
-function saveNotes(){
-  let notes = document.getElementById("personalNotes").value;
-  localStorage.setItem("personalNotes", notes);
-  alert("تم حفظ النوتة!");
-}
-
-function loadNotes(){
-  let saved = localStorage.getItem("personalNotes")||"";
-  document.getElementById("personalNotes").value = saved;
-}
-
-// الثيم
-document.getElementById("themeBtn").onclick = function(){
-  document.body.classList.toggle("dark-theme");
-}
-
 // عند التحميل
 showConcepts();
-if(isPremium) unlockPremium();
