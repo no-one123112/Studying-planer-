@@ -1,56 +1,44 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  direction: rtl;
-  text-align: center;
+  background:#f2f2f2;
+  direction:rtl;
+  text-align:center;
+  margin:0;
+  padding:0;
 }
-
-h1 {
-  margin-top: 20px;
-}
-
+h1 { margin-top:20px; }
 .container {
-  background: white;
-  width: 90%;
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border-radius: 12px;
+  background:white;
+  width:90%;
+  max-width:600px;
+  margin:auto;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
 }
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
+select, button, textarea, input { width:100%; padding:10px; margin:6px 0; }
+button { cursor:pointer; background:#4CAF50; color:white; border:none; border-radius:6px; }
+ul { list-style:none; padding:0; }
 li {
-  background: #eaeaea;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 6px;
+  background:#eaeaea;
+  margin:8px 0;
+  padding:10px;
+  border-radius:6px;
+  text-align:right;
 }
-
-/* ثيم غامق */
 .dark-theme {
-  background-color: #121212;
-  color: #fff;
+  background-color:#121212;
+  color:#fff;
 }
-
-.dark-theme .container {
-  background-color: #1e1e1e;
+.dark-theme .container { background-color:#1e1e1e; }
+textarea { min-height:150px; resize:none; }
+.premiumBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding:12px 16px;
+  background:gold;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
 }
