@@ -27,33 +27,6 @@
   <ul id="conceptList"></ul>
 </div>
 
-<!-- زر البريميم -->
-<button id="premiumBtn" class="premiumBtn">⭐ Premium</button>
-
-<!-- قسم الدفع -->
-<div id="paymentSection" class="container" style="display:none; text-align:center;">
-  <h3>اختر طريقة الدفع:</h3>
-  <select id="paymentMethod">
-    <option value="vodafone">Vodafone Cash</option>
-    <option value="orange">Orange Cash</option>
-    <option value="etisalat">Etisalat Cash</option>
-  </select>
-  <p>حول المبلغ إلى رقم المحفظة التالي:</p>
-  <p id="walletNumber">0123456789</p>
-  <input type="text" id="transactionId" placeholder="رقم التحويل / Receipt">
-  <button onclick="confirmPayment()">تأكيد الدفع</button>
-</div>
-
-<!-- ميزات البريميم -->
-<div id="premiumFeatures" class="container" style="display:none; margin-top:20px;">
-  <h2>📝 النوتة الشخصية</h2>
-  <textarea id="personalNotes" placeholder="اكتب ملاحظاتك هنا..."></textarea>
-  <button onclick="saveNotes()">حفظ الملاحظات</button>
-
-  <h2>🎨 تغيير الثيم</h2>
-  <button id="themeBtn">تغيير الثيم 🌙</button>
-</div>
-
 <script src="script.js"></script>
 <script>
 if('serviceWorker' in navigator){
