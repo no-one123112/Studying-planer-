@@ -44,6 +44,8 @@ li {
   padding: 10px;
   border-radius: 6px;
 }
+
+/* ثيم غامق */
 .dark-theme {
   background-color: #121212;
   color: #fff;
@@ -52,4 +54,3 @@ li {
 .dark-theme .container {
   background-color: #1e1e1e;
 }
-
