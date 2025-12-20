@@ -18,6 +18,8 @@
     <option value="python">Python</option>
     <option value="cpp">C++</option>
     <option value="java">Java</option>
+    <option value="c">C</option>
+    <option value="html">HTML</option>
   </select>
 
   <h2>ابحث عن مفهوم</h2>
@@ -25,6 +27,22 @@
 
   <h2>📚 قائمة المفاهيم</h2>
   <ul id="conceptList"></ul>
+
+  <!-- زر البريميم -->
+  <button id="premiumBtn" class="premium-btn">⭐ Premium</button>
+
+  <!-- النوتة الشخصية -->
+  <div id="noteContainer" style="display:none;">
+    <h2>📝 نوتتك الشخصية</h2>
+    <textarea id="userNote" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+    <button onclick="saveNote()">💾 حفظ الملاحظات</button>
+  </div>
+
+  <!-- زر تغيير الثيم -->
+  <div id="themeSwitcher" style="display:none; margin-top:10px;">
+    <button id="themeBtn">تغيير الثيم 🌙</button>
+  </div>
+
 </div>
 
 <script src="script.js"></script>
