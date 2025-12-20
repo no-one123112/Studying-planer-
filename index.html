@@ -33,13 +33,8 @@
   <ul id="plan"></ul>
 </div>
 
-<script src="script.js"></script>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/Studying-planer-/sw.js');
-}
-</script>
-  <button id="premiumBtn" style="
+<!-- زر البريميم -->
+<button id="premiumBtn" style="
 position: fixed;
 bottom: 20px;
 right: 20px;
@@ -54,14 +49,20 @@ font-size: 16px;
 
 <!-- زر تغيير الثيم -->
 <div id="themeSwitcher" style="display:none; margin-top: 10px;">
-  <button id="themeBtn">تغيير الثيم 🌙</button>
+  <button id="themeBtn">تغيير الثيم 🌙</button>
 </div>
-
 
 <!-- خرائط ذهنية -->
 <div id="mindMap" style="display:none; margin-top: 10px;">
   <p>خرائط ذهنية للمذاكرة تظهر هنا بعد شراء البريميم 🧠</p>
 </div>
+
+<script src="script.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/Studying-planer-/sw.js');
+}
+</script>
 
 </body>
 </html>
