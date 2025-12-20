@@ -1,0 +1,19 @@
+{
+  "background_color": "#4caf50",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Daily Study Planner",
+  "orientation": "portrait",
+  "scope": "/Studying-planer/",
+  "short_name": "Study Planner",
+  "start_url": "/Studying-planer/",
+  "theme_color": "#ffffff",
+  "id": "Daily Study Planner",
+  "description": "Simple daily studying planner.",
+  "categories": [
+    "books",
+    "education",
+    "kids",
+    "productivity"
+  ]
+}
