@@ -1,3 +1,4 @@
+// جدول المذاكرة
 let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
 
 function addSubject() {
@@ -27,16 +28,18 @@ function showPlan() {
 }
 
 showPlan();
-// حالة البريميم
+
+// =====================
+// ميزة البريميم
+// =====================
 let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
 
-// تفعيل المزايا البريميم
+// دوال البريميم
 function unlockPremiumFeatures() {
   document.getElementById("themeSwitcher").style.display = "block";
   document.getElementById("mindMap").style.display = "block";
 }
 
-// تغيير الثيم
 function toggleTheme() {
   if(!isPremium){
     alert("المميزات البريميم فقط!");
@@ -64,6 +67,5 @@ document.getElementById("premiumBtn").addEventListener("click", function () {
   }
 });
 
+// ربط زر تغيير الثيم
 document.getElementById("themeBtn").addEventListener("click", toggleTheme);
-
-
