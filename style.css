@@ -16,8 +16,7 @@ h1 { margin-top:20px; }
   border-radius:12px;
   margin-top:20px;
 }
-select, button, textarea, input { width:100%; padding:10px; margin:6px 0; }
-button { cursor:pointer; background:#4CAF50; color:white; border:none; border-radius:6px; }
+select, input { width:100%; padding:10px; margin:6px 0; }
 ul { list-style:none; padding:0; }
 li {
   background:#eaeaea;
@@ -31,14 +30,3 @@ li {
   color:#fff;
 }
 .dark-theme .container { background-color:#1e1e1e; }
-textarea { min-height:150px; resize:none; }
-.premiumBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding:12px 16px;
-  background:gold;
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-}
