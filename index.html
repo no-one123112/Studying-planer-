@@ -3,7 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Daily Study Planner</title>
-<link rel="stylesheet" href="style.css">
+<style>
+body { font-family: Arial, sans-serif; background:#f2f2f2; direction:rtl; text-align:center; }
+h1 { margin-top:20px; }
+.container { background:white; width:90%; max-width:400px; margin:auto; padding:20px; border-radius:12px; }
+input, select { width:100%; padding:10px; margin:6px 0; }
+button { width:100%; padding:12px; background:#4CAF50; color:white; border:none; border-radius:6px; margin:5px 0; cursor:pointer; }
+ul { list-style:none; padding:0; }
+li { background:#eaeaea; margin:8px 0; padding:10px; border-radius:6px; }
+.dark-theme { background-color:#121212; color:#fff; }
+.dark-theme .container { background-color:#1e1e1e; }
+#mapContainer div:hover { opacity:0.8; }
+</style>
 </head>
 <body>
 
@@ -31,29 +42,20 @@
   <ul id="plan"></ul>
 </div>
 
-<!-- زر بريميم -->
-<button id="premiumBtn" style="
-position: fixed;
-bottom: 20px;
-right: 20px;
-padding: 12px 16px;
-background: gold;
-border: none;
-border-radius: 10px;
-font-size: 16px;
-">
+<!-- زر Premium -->
+<button id="premiumBtn" style="position: fixed; bottom: 20px; right: 20px; padding:12px 16px; background:gold; border:none; border-radius:10px; font-size:16px;">
 ⭐ Premium
 </button>
 
-<!-- اختيار الدفع -->
-<div id="paymentSection" style="display:none; margin-top: 10px; text-align:center;">
+<!-- قسم الدفع -->
+<div id="paymentSection" style="display:none; margin-top:10px; text-align:center;">
   <h3>اختر طريقة الدفع:</h3>
   <select id="paymentMethod">
     <option value="vodafone">Vodafone Cash</option>
     <option value="orange">Orange Cash</option>
     <option value="etisalat">Etisalat Cash</option>
   </select>
-  <p>حول المبلغ إلى رقم المحفظة التالي حسب الاختيار:</p>
+  <p>حول المبلغ إلى رقم المحفظة التالي:</p>
   <p id="walletNumber">0123456789</p>
   <input type="text" id="transactionId" placeholder="رقم التحويل / Receipt">
   <button onclick="confirmPayment()">تأكيد الدفع</button>
@@ -64,29 +66,28 @@ font-size: 16px;
   <button id="themeBtn">تغيير الثيم 🌙</button>
 </div>
 
-<div id="mindMap" style="display:none; margin-top: 10px; text-align:center;">
-  <p>خرائط ذهنية للمذاكرة تظهر هنا بعد شراء البريميم 🧠</p>
+<!-- خرائط ذهنية -->
+<div id="mindMap" style="display:none; margin-top:20px;">
+  <h3>🧠 خرائط ذهنية للمذاكرة</h3>
+  <div id="mapContainer" style="position:relative; width:100%; height:400px; background:#f9f9f9; border:1px solid #ccc; border-radius:10px;"></div>
 </div>
 
 <script>
 let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
 let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
 
+// إضافة مادة
 function addSubject() {
   let name = document.getElementById("subjectName").value;
   let hours = document.getElementById("studyHours").value;
   let day = document.getElementById("day").value;
 
-  if (name === "" || hours === "") {
-    alert("من فضلك اكملي البيانات");
-    return;
-  }
+  if (name === "" || hours === "") { alert("من فضلك اكملي البيانات"); return; }
 
   subjects.push({ name, hours, day });
   localStorage.setItem("subjects", JSON.stringify(subjects));
   showPlan();
 }
-
 function showPlan() {
   let plan = document.getElementById("plan");
   plan.innerHTML = "";
@@ -98,39 +99,69 @@ function showPlan() {
 }
 showPlan();
 
-// تفعيل مزايا البريميم
+// تفعيل ميزات البريميم
 function unlockPremiumFeatures() {
   document.getElementById("themeSwitcher").style.display = "block";
-  document.getElementById("mindMap").style.display = "block";
+  unlockMindMap();
 }
-
-// تغيير الثيم
 function toggleTheme() {
   document.body.classList.toggle("dark-theme");
 }
 
-// عند الضغط على زر بريميم
+// الخرائط الذهنية الديناميكية لكل المواد
+function renderMindMap() {
+  let container = document.getElementById("mapContainer");
+  container.innerHTML = "";
+
+  let nodes = subjects.map((sub, index) => {
+    return {
+      title: sub.name,
+      info: `📅 ${sub.day}\n⏰ ${sub.hours} ساعة`,
+      x: 50 + (index % 3) * 150,
+      y: 50 + Math.floor(index / 3) * 100
+    };
+  });
+
+  nodes.forEach(node => {
+    let div = document.createElement("div");
+    div.innerText = node.title;
+    div.style.position = "absolute";
+    div.style.left = node.x + "px";
+    div.style.top = node.y + "px";
+    div.style.width = "120px";
+    div.style.height = "50px";
+    div.style.background = "#4CAF50";
+    div.style.color = "white";
+    div.style.borderRadius = "10px";
+    div.style.display = "flex";
+    div.style.alignItems = "center";
+    div.style.justifyContent = "center";
+    div.style.cursor = "pointer";
+    div.onclick = function() { alert(node.info); }
+    container.appendChild(div);
+  });
+}
+function unlockMindMap() {
+  document.getElementById("mindMap").style.display = "block";
+  renderMindMap();
+}
+
+// زر Premium
 document.getElementById("premiumBtn").onclick = function () {
   document.getElementById("paymentSection").style.display = "block";
 };
-
-// تحديث رقم المحفظة حسب طريقة الدفع
 document.getElementById("paymentMethod").onchange = function() {
   let method = this.value;
-  let number = "";
-  if(method === "vodafone") number = "0123456789";
-  else if(method === "orange") number = "0112345678";
-  else if(method === "etisalat") number = "0101234567";
+  let number = method === "vodafone" ? "0123456789" :
+               method === "orange" ? "0112345678" :
+               "0101234567";
   document.getElementById("walletNumber").innerText = number;
 };
 
 // تأكيد الدفع
 function confirmPayment() {
   let txn = document.getElementById("transactionId").value;
-  if(txn === "") {
-    alert("من فضلك اكتب رقم التحويل / Receipt");
-    return;
-  }
+  if(txn === "") { alert("من فضلك اكتب رقم التحويل / Receipt"); return; }
   isPremium = true;
   localStorage.setItem("isPremium", true);
   alert("تم تفعيل البريميم! 🌟");
@@ -141,20 +172,9 @@ function confirmPayment() {
 // تفعيل المزايا لو سبق الدفع
 if(isPremium) unlockPremiumFeatures();
 
+// ربط زر تغيير الثيم
 document.getElementById("themeBtn").onclick = toggleTheme;
 </script>
-
-<style>
-body { font-family: Arial, sans-serif; background: #f2f2f2; direction: rtl; text-align:center; }
-h1 { margin-top:20px; }
-.container { background:white; width:90%; max-width:400px; margin:auto; padding:20px; border-radius:12px; }
-input, select { width:100%; padding:10px; margin:6px 0; }
-button { width:100%; padding:12px; background:#4CAF50; color:white; border:none; border-radius:6px; }
-ul { list-style:none; padding:0; }
-li { background:#eaeaea; margin:8px 0; padding:10px; border-radius:6px; }
-.dark-theme { background-color:#121212; color:#fff; }
-.dark-theme .container { background-color:#1e1e1e; }
-</style>
 
 </body>
 </html>
