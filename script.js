@@ -1,116 +1,28 @@
-console.log("🚀 التطبيق بدأ العمل - شرح Loops فقط");
+console.log("🚀 التطبيق بدأ العمل");
 
-// بيانات Loops لكل لغة
+// حالة البريميم
+let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
+
+// بيانات المفاهيم لكل لغة
 const loopsData = {
-  javascript: [
-    {
-      name: "for loop",
-      desc: "حلقة for تُستخدم للتكرار عدد محدد من المرات.\n\nالصياغة:\nfor( البداية; الشرط; التغيير ){ الكود }",
-      example: `for(let i = 0; i < 5; i++) {
-  console.log("i =", i);
-}`
-    },
-    {
-      name: "while loop",
-      desc: "حلقة while تستمر طالما الشرط صحيح.\n\nالصياغة:\nwhile( الشرط ){ الكود }",
-      example: `let i = 0;
-while(i < 5){
-  console.log("i =", i);
-  i++;
-}`
-    },
-    {
-      name: "do-while loop",
-      desc: "حلقة do-while تنفذ الكود مرة واحدة على الأقل ثم تتحقق من الشرط.\n\nالصياغة:\ndo{ الكود } while( الشرط );",
-      example: `let i = 0;
-do {
-  console.log("i =", i);
-  i++;
-} while(i < 5);`
-    }
-  ],
-  python: [
-    {
-      name: "for loop",
-      desc: "حلقة for في بايثون تُستخدم للتكرار عبر قائمة أو نطاق معين.\n\nالصياغة:\nfor المتغير in sequence: الكود",
-      example: `for i in range(5):
-    print("i =", i)`
-    },
-    {
-      name: "while loop",
-      desc: "حلقة while تستمر طالما الشرط صحيح.\n\nالصياغة:\nwhile الشرط: الكود",
-      example: `i = 0
-while i < 5:
-    print("i =", i)
-    i += 1`
-    }
-  ],
-  cpp: [
-    {
-      name: "for loop",
-      desc: "حلقة for تُستخدم للتكرار عدد محدد من المرات.\n\nالصياغة:\nfor( البداية; الشرط; التغيير ){ الكود }",
-      example: `for(int i=0; i<5; i++){
-    std::cout << "i=" << i << std::endl;
-}`
-    },
-    {
-      name: "while loop",
-      desc: "حلقة while تستمر طالما الشرط صحيح.\n\nالصياغة:\nwhile( الشرط ){ الكود }",
-      example: `int i = 0;
-while(i < 5){
-    std::cout << "i=" << i << std::endl;
-    i++;
-}`
-    },
-    {
-      name: "do-while loop",
-      desc: "حلقة do-while تنفذ الكود مرة واحدة على الأقل.\n\nالصياغة:\ndo{ الكود } while( الشرط );",
-      example: `int i = 0;
-do{
-    std::cout << "i=" << i << std::endl;
-    i++;
-} while(i < 5);`
-    }
-  ],
-  java: [
-    {
-      name: "for loop",
-      desc: "حلقة for تُستخدم للتكرار عدد محدد من المرات.\n\nالصياغة:\nfor( البداية; الشرط; التغيير ){ الكود }",
-      example: `for(int i=0; i<5; i++){
-    System.out.println("i=" + i);
-}`
-    },
-    {
-      name: "while loop",
-      desc: "حلقة while تستمر طالما الشرط صحيح.\n\nالصياغة:\nwhile( الشرط ){ الكود }",
-      example: `int i = 0;
-while(i < 5){
-    System.out.println("i=" + i);
-    i++;
-}`
-    },
-    {
-      name: "do-while loop",
-      desc: "حلقة do-while تنفذ الكود مرة واحدة على الأقل.\n\nالصياغة:\ndo{ الكود } while( الشرط );",
-      example: `int i = 0;
-do{
-    System.out.println("i=" + i);
-    i++;
-} while(i < 5);`
-    }
-  ]
+  javascript:[{name:"for loop", desc:"for loop للتكرار عدد محدد.", example:`for(let i=0;i<5;i++){\n  console.log(i);\n}`},{name:"while loop", desc:"while loop تستمر طالما الشرط صحيح.", example:`let i=0;\nwhile(i<5){\nconsole.log(i);\ni++;\n}`},{name:"do-while loop", desc:"do-while تنفذ مرة واحدة على الأقل.", example:`let i=0;\ndo{\nconsole.log(i);\ni++;\n}while(i<5);`}],
+  python:[{name:"for loop", desc:"for loop عبر قائمة أو نطاق.", example:`for i in range(5):\n    print(i)`},{name:"while loop", desc:"while loop طالما الشرط صحيح.", example:`i=0\nwhile i<5:\n print(i)\n i+=1`}],
+  cpp:[{name:"for loop", desc:"for loop للتكرار.", example:`for(int i=0;i<5;i++){\n cout<<i<<endl;\n}`},{name:"while loop", desc:"while loop طالما الشرط صحيح.", example:`int i=0;\nwhile(i<5){\n cout<<i<<endl;\n i++;\n}`},{name:"do-while loop", desc:"do-while تنفذ مرة واحدة على الأقل.", example:`int i=0;\ndo{\n cout<<i<<endl;\n i++;\n}while(i<5);`}],
+  java:[{name:"for loop", desc:"for loop للتكرار.", example:`for(int i=0;i<5;i++){\n System.out.println(i);\n}`},{name:"while loop", desc:"while loop طالما الشرط صحيح.", example:`int i=0;\nwhile(i<5){\n System.out.println(i);\n i++;\n}`},{name:"do-while loop", desc:"do-while تنفذ مرة واحدة.", example:`int i=0;\ndo{\n System.out.println(i);\n i++;\n}while(i<5);`}],
+  c:[{name:"for loop", desc:"for loop للتكرار.", example:`for(int i=0;i<5;i++){\n printf("%d\\n",i);\n}`},{name:"while loop", desc:"while loop طالما الشرط صحيح.", example:`int i=0;\nwhile(i<5){\n printf("%d\\n",i);\n i++;\n}`},{name:"do-while loop", desc:"do-while تنفذ مرة واحدة.", example:`int i=0;\ndo{\n printf("%d\\n",i);\n i++;\n}while(i<5);`}],
+  html:[{name:"HTML Basics", desc:"HTML لغة ترميز لبناء صفحات الويب.", example:`<h1>مرحبا</h1>\n<p>فقرة</p>`},{name:"Links & Images", desc:"روابط وصور.", example:`<a href='#'>رابط</a>\n<img src='img.jpg'>`}]
 };
 
 let currentLang = "javascript";
 
-// عرض Loops
-function showLoops() {
+// عرض المفاهيم
+function showConcepts(){
   const list = document.getElementById("conceptList");
   list.innerHTML = "";
-  const loops = loopsData[currentLang] || [];
-  loops.forEach(loop => {
+  const concepts = loopsData[currentLang] || [];
+  concepts.forEach(c=>{
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${loop.name}</strong><br>📝 ${loop.desc.replace(/\n/g,"<br>")}<br>💻 مثال:<pre>${loop.example}</pre>`;
+    li.innerHTML = `<strong>${c.name}</strong><br>📝 ${c.desc.replace(/\n/g,"<br>")}<br>💻 مثال:<pre>${c.example}</pre>`;
     list.appendChild(li);
   });
 }
@@ -118,24 +30,63 @@ function showLoops() {
 // تغيير اللغة
 function changeLanguage(){
   currentLang = document.getElementById("languageSelect").value;
-  console.log("🔄 اللغة:", currentLang);
-  showLoops();
+  showConcepts();
 }
 
-// البحث داخل Loops
+// البحث
 function searchConcepts(){
   const term = document.getElementById("searchInput").value.toLowerCase();
   const list = document.getElementById("conceptList");
   list.innerHTML = "";
-  const loops = loopsData[currentLang] || [];
-  loops.forEach(loop=>{
-    if(loop.name.toLowerCase().includes(term) || loop.desc.toLowerCase().includes(term)){
+  const concepts = loopsData[currentLang] || [];
+  concepts.forEach(c=>{
+    if(c.name.toLowerCase().includes(term) || c.desc.toLowerCase().includes(term)){
       const li = document.createElement("li");
-      li.innerHTML = `<strong>${loop.name}</strong><br>📝 ${loop.desc.replace(/\n/g,"<br>")}<br>💻 مثال:<pre>${loop.example}</pre>`;
+      li.innerHTML = `<strong>${c.name}</strong><br>📝 ${c.desc.replace(/\n/g,"<br>")}<br>💻 مثال:<pre>${c.example}</pre>`;
       list.appendChild(li);
     }
   });
 }
 
+// تفعيل البريميم
+function unlockPremiumFeatures(){
+  document.getElementById("noteContainer").style.display="block";
+  document.getElementById("themeSwitcher").style.display="block";
+}
+
+// زر البريميم
+document.getElementById("premiumBtn").onclick = function(){
+  let paymentSuccess = confirm("✨ هل تمت عملية الدفع؟ اضغطي OK للتأكيد");
+  if(paymentSuccess){
+    isPremium = true;
+    localStorage.setItem("isPremium", true);
+    alert("تم تفعيل البريميم! 🌟");
+    unlockPremiumFeatures();
+    loadNote();
+  } else {
+    alert("المميزات البريميم لم تُفعّل.");
+  }
+};
+
+// تغيير الثيم
+document.getElementById("themeBtn").onclick = function(){
+  if(!isPremium){ alert("المميزات البريميم فقط!"); return;}
+  document.body.classList.toggle("dark-theme");
+};
+
+// نوتة المستخدم
+function saveNote(){
+  const note = document.getElementById("userNote").value;
+  localStorage.setItem("userNote", note);
+  alert("تم حفظ الملاحظات ✅");
+}
+function loadNote(){
+  const note = localStorage.getItem("userNote") || "";
+  document.getElementById("userNote").value = note;
+}
+
+// تفعيل تلقائي لو سبق الدفع
+if(isPremium){ unlockPremiumFeatures(); loadNote(); }
+
 // عند التحميل
-showLoops();
+showConcepts();
