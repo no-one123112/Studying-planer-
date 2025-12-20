@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <link rel="manifest" href="manifest.json">
-  <meta name="google-site-verification" content="W6dPnpvzqxV7Va17BLT9fX2aMetQ02UwsL1JHe9IYA0" />
-  <meta charset="UTF-8">
-  <title>Daily Study Planner</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Daily Study Planner</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -33,7 +31,7 @@
   <ul id="plan"></ul>
 </div>
 
-<!-- زر البريميم -->
+<!-- زر بريميم -->
 <button id="premiumBtn" style="
 position: fixed;
 bottom: 20px;
@@ -47,22 +45,116 @@ font-size: 16px;
 ⭐ Premium
 </button>
 
-<!-- زر تغيير الثيم -->
-<div id="themeSwitcher" style="display:none; margin-top: 10px;">
+<!-- اختيار الدفع -->
+<div id="paymentSection" style="display:none; margin-top: 10px; text-align:center;">
+  <h3>اختر طريقة الدفع:</h3>
+  <select id="paymentMethod">
+    <option value="vodafone">Vodafone Cash</option>
+    <option value="orange">Orange Cash</option>
+    <option value="etisalat">Etisalat Cash</option>
+  </select>
+  <p>حول المبلغ إلى رقم المحفظة التالي حسب الاختيار:</p>
+  <p id="walletNumber">0123456789</p>
+  <input type="text" id="transactionId" placeholder="رقم التحويل / Receipt">
+  <button onclick="confirmPayment()">تأكيد الدفع</button>
+</div>
+
+<!-- ميزات البريميم -->
+<div id="themeSwitcher" style="display:none; margin-top: 10px; text-align:center;">
   <button id="themeBtn">تغيير الثيم 🌙</button>
 </div>
 
-<!-- خرائط ذهنية -->
-<div id="mindMap" style="display:none; margin-top: 10px;">
+<div id="mindMap" style="display:none; margin-top: 10px; text-align:center;">
   <p>خرائط ذهنية للمذاكرة تظهر هنا بعد شراء البريميم 🧠</p>
 </div>
 
-<script src="script.js"></script>
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/Studying-planer-/sw.js');
+let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
+let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
+
+function addSubject() {
+  let name = document.getElementById("subjectName").value;
+  let hours = document.getElementById("studyHours").value;
+  let day = document.getElementById("day").value;
+
+  if (name === "" || hours === "") {
+    alert("من فضلك اكملي البيانات");
+    return;
+  }
+
+  subjects.push({ name, hours, day });
+  localStorage.setItem("subjects", JSON.stringify(subjects));
+  showPlan();
 }
+
+function showPlan() {
+  let plan = document.getElementById("plan");
+  plan.innerHTML = "";
+  subjects.forEach(sub => {
+    let li = document.createElement("li");
+    li.innerHTML = `📅 ${sub.day}<br>📘 ${sub.name}<br>⏰ ${sub.hours} ساعة`;
+    plan.appendChild(li);
+  });
+}
+showPlan();
+
+// تفعيل مزايا البريميم
+function unlockPremiumFeatures() {
+  document.getElementById("themeSwitcher").style.display = "block";
+  document.getElementById("mindMap").style.display = "block";
+}
+
+// تغيير الثيم
+function toggleTheme() {
+  document.body.classList.toggle("dark-theme");
+}
+
+// عند الضغط على زر بريميم
+document.getElementById("premiumBtn").onclick = function () {
+  document.getElementById("paymentSection").style.display = "block";
+};
+
+// تحديث رقم المحفظة حسب طريقة الدفع
+document.getElementById("paymentMethod").onchange = function() {
+  let method = this.value;
+  let number = "";
+  if(method === "vodafone") number = "0123456789";
+  else if(method === "orange") number = "0112345678";
+  else if(method === "etisalat") number = "0101234567";
+  document.getElementById("walletNumber").innerText = number;
+};
+
+// تأكيد الدفع
+function confirmPayment() {
+  let txn = document.getElementById("transactionId").value;
+  if(txn === "") {
+    alert("من فضلك اكتب رقم التحويل / Receipt");
+    return;
+  }
+  isPremium = true;
+  localStorage.setItem("isPremium", true);
+  alert("تم تفعيل البريميم! 🌟");
+  unlockPremiumFeatures();
+  document.getElementById("paymentSection").style.display = "none";
+}
+
+// تفعيل المزايا لو سبق الدفع
+if(isPremium) unlockPremiumFeatures();
+
+document.getElementById("themeBtn").onclick = toggleTheme;
 </script>
+
+<style>
+body { font-family: Arial, sans-serif; background: #f2f2f2; direction: rtl; text-align:center; }
+h1 { margin-top:20px; }
+.container { background:white; width:90%; max-width:400px; margin:auto; padding:20px; border-radius:12px; }
+input, select { width:100%; padding:10px; margin:6px 0; }
+button { width:100%; padding:12px; background:#4CAF50; color:white; border:none; border-radius:6px; }
+ul { list-style:none; padding:0; }
+li { background:#eaeaea; margin:8px 0; padding:10px; border-radius:6px; }
+.dark-theme { background-color:#121212; color:#fff; }
+.dark-theme .container { background-color:#1e1e1e; }
+</style>
 
 </body>
 </html>
