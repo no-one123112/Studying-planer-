@@ -44,3 +44,12 @@ li {
   padding: 10px;
   border-radius: 6px;
 }
+.dark-theme {
+  background-color: #121212;
+  color: #fff;
+}
+
+.dark-theme .container {
+  background-color: #1e1e1e;
+}
+
