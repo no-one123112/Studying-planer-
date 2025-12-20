@@ -51,7 +51,7 @@ if(isPremium){
 }
 
 // زر البريميم
-document.getElementById("premiumBtn").onclick = function () {
+document.getElementById("premiumBtn").addEventListener("click", function () {
   let paymentSuccess = confirm("✨ هل تمت عملية الدفع؟ اضغطي OK للتأكيد");
 
   if(paymentSuccess){
@@ -62,8 +62,8 @@ document.getElementById("premiumBtn").onclick = function () {
   } else {
     alert("المميزات البريميم لم تُفعّل.");
   }
-};
+});
 
-// ربط زر تغيير الثيم
-document.getElementById("themeBtn").onclick = toggleTheme;
+document.getElementById("themeBtn").addEventListener("click", toggleTheme);
+
 
