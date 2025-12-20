@@ -52,10 +52,15 @@ font-size: 16px;
 ⭐ Premium
 </button>
 
-<script>
-document.getElementById("premiumBtn").onclick = function () {
-  alert("✨ نسخة Premium قريبًا!\n\nهتفتح مميزات إضافية للمذاكرة 📚");
-};
-</script>
+<!-- زر تغيير الثيم -->
+<div id="themeSwitcher" style="display:none; margin-top: 10px;">
+  <button onclick="toggleTheme()">تغيير الثيم 🌙</button>
+</div>
+
+<!-- خرائط ذهنية -->
+<div id="mindMap" style="display:none; margin-top: 10px;">
+  <p>خرائط ذهنية للمذاكرة تظهر هنا بعد شراء البريميم 🧠</p>
+</div>
+
 </body>
 </html>
