@@ -2,53 +2,38 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Daily Study Planner</title>
-<style>
-body { font-family: Arial, sans-serif; background:#f2f2f2; direction:rtl; text-align:center; }
-h1 { margin-top:20px; }
-.container { background:white; width:90%; max-width:400px; margin:auto; padding:20px; border-radius:12px; }
-input, select { width:100%; padding:10px; margin:6px 0; }
-button { width:100%; padding:12px; background:#4CAF50; color:white; border:none; border-radius:6px; margin:5px 0; cursor:pointer; }
-ul { list-style:none; padding:0; }
-li { background:#eaeaea; margin:8px 0; padding:10px; border-radius:6px; }
-.dark-theme { background-color:#121212; color:#fff; }
-.dark-theme .container { background-color:#1e1e1e; }
-#mapContainer div:hover { opacity:0.8; }
-</style>
+<meta name="google-site-verification" content="W6dPnpvzqxV7Va17BLT9fX2aMetQ02UwsL1JHe9IYA0" />
+<title>Programming Learning Hub</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-<h1>📚 Daily Study Planner</h1>
+<h1>💻 Programming Learning Hub</h1>
 
 <div class="container">
-  <h2>إدخال بيانات المذاكرة</h2>
-
-  <input type="text" id="subjectName" placeholder="اسم المادة">
-  <input type="number" id="studyHours" placeholder="عدد الساعات">
-
-  <select id="day">
-    <option value="السبت">السبت</option>
-    <option value="الأحد">الأحد</option>
-    <option value="الاثنين">الاثنين</option>
-    <option value="الثلاثاء">الثلاثاء</option>
-    <option value="الأربعاء">الأربعاء</option>
-    <option value="الخميس">الخميس</option>
-    <option value="الجمعة">الجمعة</option>
+  <h2>اختر اللغة</h2>
+  <select id="languageSelect" onchange="changeLanguage()">
+    <option value="javascript">JavaScript</option>
+    <option value="python">Python</option>
+    <option value="cpp">C++</option>
+    <option value="java">Java</option>
   </select>
 
-  <button onclick="addSubject()">إنشاء الجدول</button>
+  <h2>ابحث عن مفهوم</h2>
+  <input type="text" id="searchInput" placeholder="اكتب هنا للبحث" onkeyup="searchConcepts()">
 
-  <h2>📅 جدول المذاكرة</h2>
-  <ul id="plan"></ul>
+  <h2>📚 قائمة المفاهيم</h2>
+  <ul id="conceptList"></ul>
 </div>
 
-<!-- زر Premium -->
-<button id="premiumBtn" style="position: fixed; bottom: 20px; right: 20px; padding:12px 16px; background:gold; border:none; border-radius:10px; font-size:16px;">
+<!-- زر البريميم -->
+<button id="premiumBtn" class="premiumBtn">
 ⭐ Premium
 </button>
 
-<!-- قسم الدفع -->
-<div id="paymentSection" style="display:none; margin-top:10px; text-align:center;">
+<!-- قسم الدفع / تفعيل البريميم -->
+<div id="paymentSection" class="container" style="display:none; text-align:center;">
   <h3>اختر طريقة الدفع:</h3>
   <select id="paymentMethod">
     <option value="vodafone">Vodafone Cash</option>
@@ -62,119 +47,22 @@ li { background:#eaeaea; margin:8px 0; padding:10px; border-radius:6px; }
 </div>
 
 <!-- ميزات البريميم -->
-<div id="themeSwitcher" style="display:none; margin-top: 10px; text-align:center;">
+<div id="premiumFeatures" class="container" style="display:none; margin-top:20px;">
+  <h2>📝 النوتة الشخصية</h2>
+  <textarea id="personalNotes" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+  <button onclick="saveNotes()">حفظ الملاحظات</button>
+
+  <h2>🎨 تغيير الثيم</h2>
   <button id="themeBtn">تغيير الثيم 🌙</button>
 </div>
 
-<!-- خرائط ذهنية -->
-<div id="mindMap" style="display:none; margin-top:20px;">
-  <h3>🧠 خرائط ذهنية للمذاكرة</h3>
-  <div id="mapContainer" style="position:relative; width:100%; height:400px; background:#f9f9f9; border:1px solid #ccc; border-radius:10px;"></div>
-</div>
-
+<script src="script.js"></script>
 <script>
-let subjects = JSON.parse(localStorage.getItem("subjects")) || [];
-let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
-
-// إضافة مادة
-function addSubject() {
-  let name = document.getElementById("subjectName").value;
-  let hours = document.getElementById("studyHours").value;
-  let day = document.getElementById("day").value;
-
-  if (name === "" || hours === "") { alert("من فضلك اكملي البيانات"); return; }
-
-  subjects.push({ name, hours, day });
-  localStorage.setItem("subjects", JSON.stringify(subjects));
-  showPlan();
-}
-function showPlan() {
-  let plan = document.getElementById("plan");
-  plan.innerHTML = "";
-  subjects.forEach(sub => {
-    let li = document.createElement("li");
-    li.innerHTML = `📅 ${sub.day}<br>📘 ${sub.name}<br>⏰ ${sub.hours} ساعة`;
-    plan.appendChild(li);
-  });
-}
-showPlan();
-
-// تفعيل ميزات البريميم
-function unlockPremiumFeatures() {
-  document.getElementById("themeSwitcher").style.display = "block";
-  unlockMindMap();
-}
-function toggleTheme() {
-  document.body.classList.toggle("dark-theme");
-}
-
-// الخرائط الذهنية الديناميكية لكل المواد
-function renderMindMap() {
-  let container = document.getElementById("mapContainer");
-  container.innerHTML = "";
-
-  let nodes = subjects.map((sub, index) => {
-    return {
-      title: sub.name,
-      info: `📅 ${sub.day}\n⏰ ${sub.hours} ساعة`,
-      x: 50 + (index % 3) * 150,
-      y: 50 + Math.floor(index / 3) * 100
-    };
-  });
-
-  nodes.forEach(node => {
-    let div = document.createElement("div");
-    div.innerText = node.title;
-    div.style.position = "absolute";
-    div.style.left = node.x + "px";
-    div.style.top = node.y + "px";
-    div.style.width = "120px";
-    div.style.height = "50px";
-    div.style.background = "#4CAF50";
-    div.style.color = "white";
-    div.style.borderRadius = "10px";
-    div.style.display = "flex";
-    div.style.alignItems = "center";
-    div.style.justifyContent = "center";
-    div.style.cursor = "pointer";
-    div.onclick = function() { alert(node.info); }
-    container.appendChild(div);
-  });
-}
-function unlockMindMap() {
-  document.getElementById("mindMap").style.display = "block";
-  renderMindMap();
-}
-
-// زر Premium
-document.getElementById("premiumBtn").onclick = function () {
-  document.getElementById("paymentSection").style.display = "block";
-};
-document.getElementById("paymentMethod").onchange = function() {
-  let method = this.value;
-  let number = method === "vodafone" ? "0123456789" :
-               method === "orange" ? "0112345678" :
-               "0101234567";
-  document.getElementById("walletNumber").innerText = number;
-};
-
-// تأكيد الدفع
-function confirmPayment() {
-  let txn = document.getElementById("transactionId").value;
-  if(txn === "") { alert("من فضلك اكتب رقم التحويل / Receipt"); return; }
-  isPremium = true;
-  localStorage.setItem("isPremium", true);
-  alert("تم تفعيل البريميم! 🌟");
-  unlockPremiumFeatures();
-  document.getElementById("paymentSection").style.display = "none";
-}
-
-// تفعيل المزايا لو سبق الدفع
-if(isPremium) unlockPremiumFeatures();
-
-// ربط زر تغيير الثيم
-document.getElementById("themeBtn").onclick = toggleTheme;
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js')
+      .then(()=>console.log("✅ Service Worker مسجل بنجاح"))
+      .catch(err=>console.log("❌ خطأ في تسجيل Service Worker:", err));
+  }
 </script>
-
 </body>
 </html>
