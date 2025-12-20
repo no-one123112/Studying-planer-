@@ -39,5 +39,23 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Studying-planer-/sw.js');
 }
 </script>
+  <button id="premiumBtn" style="
+position: fixed;
+bottom: 20px;
+right: 20px;
+padding: 12px 16px;
+background: gold;
+border: none;
+border-radius: 10px;
+font-size: 16px;
+">
+⭐ Premium
+</button>
+
+<script>
+document.getElementById("premiumBtn").onclick = function () {
+  alert("✨ نسخة Premium قريبًا!\n\nهتفتح مميزات إضافية للمذاكرة 📚");
+};
+</script>
 </body>
 </html>
