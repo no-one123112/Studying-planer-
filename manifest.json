@@ -1,7 +1,7 @@
 {
   "name": "Daily Study Planner",
   "short_name": "Study Planner",
-  "start_url": "/Studying-planer-/",
+  "start_url": "/Studying-planer-/index.html",
   "display": "standalone",
   "background_color": "#4CAF50",
   "theme_color": "#4CAF50",
