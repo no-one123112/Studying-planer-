@@ -28,11 +28,9 @@
 </div>
 
 <!-- زر البريميم -->
-<button id="premiumBtn" class="premiumBtn">
-⭐ Premium
-</button>
+<button id="premiumBtn" class="premiumBtn">⭐ Premium</button>
 
-<!-- قسم الدفع / تفعيل البريميم -->
+<!-- قسم الدفع -->
 <div id="paymentSection" class="container" style="display:none; text-align:center;">
   <h3>اختر طريقة الدفع:</h3>
   <select id="paymentMethod">
@@ -58,11 +56,11 @@
 
 <script src="script.js"></script>
 <script>
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('sw.js')
-      .then(()=>console.log("✅ Service Worker مسجل بنجاح"))
-      .catch(err=>console.log("❌ خطأ في تسجيل Service Worker:", err));
-  }
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js')
+    .then(()=>console.log("✅ Service Worker مسجل"))
+    .catch(err=>console.log("❌ خطأ في Service Worker:", err));
+}
 </script>
 </body>
 </html>
