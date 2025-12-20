@@ -27,3 +27,43 @@ function showPlan() {
 }
 
 showPlan();
+// حالة البريميم
+let isPremium = JSON.parse(localStorage.getItem("isPremium")) || false;
+
+// تفعيل المزايا البريميم
+function unlockPremiumFeatures() {
+  document.getElementById("themeSwitcher").style.display = "block";
+  document.getElementById("mindMap").style.display = "block";
+}
+
+// تغيير الثيم
+function toggleTheme() {
+  if(!isPremium){
+    alert("المميزات البريميم فقط!");
+    return;
+  }
+  document.body.classList.toggle("dark-theme");
+}
+
+// تفعيل المزايا تلقائيًا لو سبق تفعيلها
+if(isPremium){
+  unlockPremiumFeatures();
+}
+
+// زر البريميم
+document.getElementById("premiumBtn").onclick = function () {
+  let paymentSuccess = confirm("✨ هل تمت عملية الدفع؟ اضغطي OK للتأكيد");
+
+  if(paymentSuccess){
+    isPremium = true;
+    localStorage.setItem("isPremium", true);
+    alert("تم تفعيل البريميم! 🌟");
+    unlockPremiumFeatures();
+  } else {
+    alert("المميزات البريميم لم تُفعّل.");
+  }
+};
+
+// ربط زر تغيير الثيم
+document.getElementById("themeBtn").onclick = toggleTheme;
+
