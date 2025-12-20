@@ -1,19 +1,17 @@
 {
-  "background_color": "#4caf50",
-  "dir": "ltr",
-  "display": "standalone",
   "name": "Daily Study Planner",
-  "orientation": "portrait",
-  "scope": "/Studying-planer/",
   "short_name": "Study Planner",
-  "start_url": "/Studying-planer/",
-  "theme_color": "#ffffff",
-  "id": "Daily Study Planner",
-  "description": "Simple daily studying planner.",
-  "categories": [
-    "books",
-    "education",
-    "kids",
-    "productivity"
+  "start_url": "/Studying-planer-/",
+  "display": "standalone",
+  "background_color": "#4CAF50",
+  "theme_color": "#4CAF50",
+  "description": "A simple daily study planner to organize subjects and study hours",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
+
