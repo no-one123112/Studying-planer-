@@ -8,18 +8,22 @@
 <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+<!-- التأكد من تسجيل الدخول -->
 <script>
 if(localStorage.getItem("loggedIn") !== "true"){
   window.location.href = "login.html";
 }
 </script>
-<button onclick="logout()">Logout</button>
+
+<!-- زر تسجيل الخروج -->
+<button id="logoutBtn">Logout</button>
 
 <h1>💻 Programming Learning Hub</h1>
 
 <div class="container">
   <h2>اختر اللغة</h2>
-  <select id="languageSelect" onchange="changeLanguage()">
+  <select id="languageSelect">
     <option value="javascript">JavaScript</option>
     <option value="python">Python</option>
     <option value="cpp">C++</option>
@@ -29,7 +33,7 @@ if(localStorage.getItem("loggedIn") !== "true"){
   </select>
 
   <h2>ابحث عن مفهوم</h2>
-  <input type="text" id="searchInput" placeholder="اكتب هنا للبحث" onkeyup="searchConcepts()">
+  <input type="text" id="searchInput" placeholder="اكتب هنا للبحث">
 
   <h2>📚 قائمة المفاهيم</h2>
   <ul id="conceptList"></ul>
@@ -41,23 +45,18 @@ if(localStorage.getItem("loggedIn") !== "true"){
   <div id="noteContainer" style="display:none;">
     <h2>📝 نوتتك الشخصية</h2>
     <textarea id="userNote" placeholder="اكتب ملاحظاتك هنا..."></textarea>
-    <button onclick="saveNote()">💾 حفظ الملاحظات</button>
+    <button id="saveNoteBtn">💾 حفظ الملاحظات</button>
   </div>
 
   <!-- زر تغيير الثيم -->
   <div id="themeSwitcher" style="display:none; margin-top:10px;">
     <button id="themeBtn">تغيير الثيم 🌙</button>
   </div>
-
 </div>
 
-<script src="script.js"></script>
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js')
-    .then(()=>console.log("✅ Service Worker مسجل"))
-    .catch(err=>console.log("❌ خطأ في Service Worker:", err));
-}
-</script>
+<!-- ربط السكربت -->
+<script src="script.js" defer></script>
+
 </body>
 </html>
+
