@@ -118,3 +118,9 @@ if(isPremium){
 
 // عرض المفاهيم عند تحميل الصفحة
 showConcepts();
+function logout(){
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("currentUser");
+  window.location.href = "login.html";
+}
+
