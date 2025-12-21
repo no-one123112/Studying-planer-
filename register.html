@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>إنشاء حساب</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>إنشاء حساب جديد</h2>
+
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="register()">إنشاء حساب</button>
+
+<p>
+عندك حساب؟
+<a href="login.html">سجل دخول</a>
+</p>
+
+<script>
+function register(){
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+
+  if(!email || !password){
+    alert("كملي البيانات");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+
+  let exists = users.find(u => u.email === email);
+  if(exists){
+    alert("الإيميل مسجل قبل كده");
+    return;
+  }
+
+  users.push({ email: email, password: password });
+  localStorage.setItem("users", JSON.stringify(users));
+
+  alert("تم إنشاء الحساب بنجاح 🎉");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
