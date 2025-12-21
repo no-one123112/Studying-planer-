@@ -87,10 +87,26 @@ function loadNote(){
   document.getElementById("userNote").value = note;
 }
 
-// ربط أزرار البريميم بعد تحميل الصفحة
-document.addEventListener("DOMContentLoaded", function(){
+// زر تسجيل الخروج
+function logout(){
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("currentUser");
+  window.location.href = "login.html";
+}
+
+// بعد تحميل الصفحة
+document.addEventListener("DOMContentLoaded", ()=>{
+  // زر اللوج اوت
+  document.getElementById("logoutBtn").onclick = logout;
+
+  // تغيير اللغة
+  document.getElementById("languageSelect").onchange = changeLanguage;
+
+  // البحث
+  document.getElementById("searchInput").onkeyup = searchConcepts;
+
   // زر البريميم
-  document.getElementById("premiumBtn").onclick = function(){
+  document.getElementById("premiumBtn").onclick = ()=>{
     let paymentSuccess = confirm("✨ هل تمت عملية الدفع؟ اضغطي OK للتأكيد");
     if(paymentSuccess){
       isPremium = true;
@@ -103,24 +119,21 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   };
 
+  // زر حفظ النوتة
+  document.getElementById("saveNoteBtn").onclick = saveNote;
+
   // زر تغيير الثيم
-  document.getElementById("themeBtn").onclick = function(){
+  document.getElementById("themeBtn").onclick = ()=>{
     if(!isPremium){ alert("المميزات البريميم فقط!"); return;}
     document.body.classList.toggle("dark-theme");
   };
+
+  // تفعيل تلقائي لو سبق الدفع
+  if(isPremium){
+    unlockPremiumFeatures();
+    loadNote();
+  }
+
+  // عرض المفاهيم عند تحميل الصفحة
+  showConcepts();
 });
-
-// تفعيل تلقائي لو سبق الدفع
-if(isPremium){ 
-  unlockPremiumFeatures(); 
-  loadNote(); 
-}
-
-// عرض المفاهيم عند تحميل الصفحة
-showConcepts();
-function logout(){
-  localStorage.removeItem("loggedIn");
-  localStorage.removeItem("currentUser");
-  window.location.href = "login.html";
-}
-
