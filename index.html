@@ -8,15 +8,20 @@
 <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+
 <!-- زر تسجيل الخروج -->
 <button id="logoutBtn">Logout</button>
-<!-- التأكد من تسجيل الدخول -->
+
+<!-- السكربت -->
+<script src="script.js" defer></script>
+
+<!-- شرط التحقق من تسجيل الدخول (بعد تحميل السكريبت أو ضمن script.js) -->
 <script>
 if(localStorage.getItem("loggedIn") !== "true"){
   window.location.href = "login.html";
 }
 </script>
-
 
 
 <h1>💻 Programming Learning Hub</h1>
